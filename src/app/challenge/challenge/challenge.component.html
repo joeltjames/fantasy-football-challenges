@@ -1,0 +1,90 @@
+<div class="card-header"
+     style="position: relative; height: 2.5em;">
+  <span [@outAnimation]
+        *ngIf="loading"
+        style="position: absolute;">Loading...</span>
+  <span [@inAnimation]
+        *ngIf="!loading"
+        style="position: absolute;">{{title}}</span>
+</div>
+<div class="card-body h-100 d-flex justify-content-center align-items-cente">
+  <i class="fade-in-and-out fas fa-football-ball"
+     *ngIf="loading"
+     style="color: #624a2e; font-size: 2rem;"></i>
+  <div *ngIf="teams != null && teams.length > 0">
+    <ng-container [ngSwitch]="challenge">
+      <app-mpsl-challenge (loaded)="loading = false"
+                          [teams]="teams"
+                          [year]="year"
+                          [week]="week"
+                          [leagueId]="leagueId"
+                          *ngSwitchCase="challenges.MOST_POINTS_STARTING_LINEUP"></app-mpsl-challenge>
+      <app-wbsm-challenge (loaded)="loading = false"
+                          [teams]="teams"
+                          [year]="year"
+                          [week]="week"
+                          [leagueId]="leagueId"
+                          *ngSwitchCase="challenges.WIN_BY_SMALLEST_MARGIN"></app-wbsm-challenge>
+      <app-lbsm-challenge (loaded)="loading = false"
+                          [teams]="teams"
+                          [year]="year"
+                          [week]="week"
+                          [leagueId]="leagueId"
+                          *ngSwitchCase="challenges.LOSE_BY_SMALLEST_MARGIN"></app-lbsm-challenge>
+      <app-lpbw-challenge (loaded)="loading = false"
+                          [teams]="teams"
+                          [year]="year"
+                          [week]="week"
+                          [leagueId]="leagueId"
+                          *ngSwitchCase="challenges.LEAST_POINTS_BY_WINNER"></app-lpbw-challenge>
+      <app-lps-challenge (loaded)="loading = false"
+                         [teams]="teams"
+                         [year]="year"
+                         [week]="week"
+                         [leagueId]="leagueId"
+                         *ngSwitchCase="challenges.LEAST_POINTS_STARTING_LINEUP"></app-lps-challenge>
+      <app-lblm-challenge (loaded)="loading = false"
+                          [teams]="teams"
+                          [year]="year"
+                          [week]="week"
+                          [leagueId]="leagueId"
+                          *ngSwitchCase="challenges.LOSE_BY_LARGEST_MARGIN"></app-lblm-challenge>
+      <app-wblm-challenge (loaded)="loading = false"
+                          [teams]="teams"
+                          [year]="year"
+                          [week]="week"
+                          [leagueId]="leagueId"
+                          *ngSwitchCase="challenges.WIN_BY_LARGEST_MARGIN"></app-wblm-challenge>
+      <app-mpsll-challenge (loaded)="loading = false"
+                           [teams]="teams"
+                           [year]="year"
+                           [week]="week"
+                           [leagueId]="leagueId"
+                           *ngSwitchCase="challenges.MOST_POINTS_STARTING_LINEUP_LOSER"></app-mpsll-challenge>
+      <app-mpbb-challenge (loaded)="loading = false"
+                          [teams]="teams"
+                          [year]="year"
+                          [week]="week"
+                          [leagueId]="leagueId"
+                          *ngSwitchCase="challenges.MOST_POINTS_BY_BENCH"></app-mpbb-challenge>
+      <app-lpbb-challenge (loaded)="loading = false"
+                          [teams]="teams"
+                          [year]="year"
+                          [week]="week"
+                          [leagueId]="leagueId"
+                          *ngSwitchCase="challenges.LEAST_POINTS_BY_BENCH"></app-lpbb-challenge>
+      <app-mpbet-challenge (loaded)="loading = false"
+                           [teams]="teams"
+                           [year]="year"
+                           [week]="week"
+                           [leagueId]="leagueId"
+                           *ngSwitchCase="challenges.MOST_POINTS_BY_ENTIRE_TEAM"></app-mpbet-challenge>
+    </ng-container>
+  </div>
+</div>
+
+<div class="card-footer">
+  <button type="button"
+          class="btn btn-primary"
+          (click)="exit.emit()">Exit</button>
+</div>

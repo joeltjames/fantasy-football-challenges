@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+html, body {
+  height: 100%;
+  background-color: #a8e6ff;
+}
+
+
+.gold {
+  color: #FFD700;
+}
+
+
+.silver {
+  color: #C0C0C0;
+}
+
+.bronze {
+  color: #cd7f32;
+}
+
+.table td {
+  text-align: center;
+}

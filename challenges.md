@@ -1,0 +1,35 @@
+Supported Challenges:
+- Most Points by Starting Lineup
+- Most Points by Starting Lineup (Loser)
+- Win By Smallest Margin
+- Lose By Smallest Margin
+- Least Points by Winner
+- Least Points by Starting Lineup
+- Losing By Largest Margin
+- Winning By Largest Margin
+- Most Points by Bench
+- Lowest Scoring Bench
+- Most Points By Entire Team
+
+To Do:
+- Least Points by Starting Defense
+- Most Points by Starting Defense
+- Highest Scoring Qb
+- Highest Scoring Qb Duo
+- Most Receptions By Starting Wr
+- Highest Scoring Te
+- Most Turnovers By Team
+- Highest Scoring Defense
+- Starting Player Who Out Performs Projection The Most
+- Most Receptions By Rb
+- Flex That Scores The Most Point Without A Td
+- Largest Improvement from Previous Week to Selected
+- Most Points by Losing Team
+- Most Receptions by Starting WRs
+- Team with most points up to selected week
+- Team with most offensive touchdowns
+- Defense with most sacks
+- Team with closet to 100 rushing yards
+- Team with the most starting players from the same NFL team
+- Most points by starting K
+- Most passing yard by QB
