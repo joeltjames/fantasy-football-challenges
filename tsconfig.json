@@ -10,6 +10,12 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
+    "paths": {
+      "NgEspnFantasyFootball": [
+        "dist/ng-espn-fantasy-football/ng-espn-fantasy-football",
+        "dist/ng-espn-fantasy-football"
+      ]
+    },
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,

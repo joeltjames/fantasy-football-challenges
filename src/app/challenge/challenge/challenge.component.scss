@@ -12,3 +12,8 @@
 0%,100% { opacity: 0; }
 50% { opacity: 1; }
 }
+
+.loading-indicator {
+  color: theme-color("primary");
+  font-size: 2rem;
+}

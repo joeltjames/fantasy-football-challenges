@@ -1,0 +1,3 @@
+[submodule "projects/ng-espn-fantasy-football"]
+	path = projects/ng-espn-fantasy-football
+	url = https://github.com/joeltjames/ng-espn-fantasy-football.git

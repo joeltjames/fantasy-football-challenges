@@ -1,80 +1,217 @@
+<ng-template #content
+             let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title"
+        id="modal-basic-title">Extracting Cookies from ESPN</h4>
+    <button type="button"
+            class="close"
+            aria-label="Close"
+            (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ul ngbNav
+        #nav="ngbNav"
+        [(activeId)]="active"
+        class="nav-tabs">
+      <li [ngbNavItem]="'chrome'">
+        <a ngbNavLink>Chrome <img style="height: 2em;"
+               src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/69.0.4/chrome/chrome_24x24.png"></a>
+        <ng-template ngbNavContent>
+          <i>Note: Both cookies are required for private leagues</i>
+          <ol>
+            <li>Login to the ESPN website @ <a href="https://www.espn.com/fantasy/football/">https://www.espn.com/fantasy/football/</a></li>
+            <li>Right click anywhere on the screen, and select "Inspect" (or press <span class="text-monospace">CMD+ALT+I</span>)</li>
+            <li>Navigate to the "Application" tab in the Chrome Dev Tools</li>
+            <li>Under the "Cookies" heading, select <span class="text-monospace">https://www.espn.com</span></li>
+            <li>Copy the value for <span class="text-monospace">espn_s2</span> and paste it in the field with the corresponding label on this page.</li>
+            <li>Copy the value for <span class="text-monospace">SWID</span> and paste it in the field with the corresponding label on this page.</li>
+          </ol>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="'firefox'">
+        <a ngbNavLink>Firefox <img style="height: 2em;"
+               src="https://cdnjs.cloudflare.com/ajax/libs/browser-logos/69.0.4/firefox/firefox_24x24.png"></a>
+        <ng-template ngbNavContent>
+          <i>Note: Both cookies are required for private leagues</i>
+          <ol>
+            <li>Login to the ESPN website @ <a href="https://www.espn.com/fantasy/football/">https://www.espn.com/fantasy/football/</a></li>
+            <li>Right click anywhere on the screen, and select "Inspect Element" (or press <span class="text-monospace">CMD+ALT+I</span>)</li>
+            <li>Navigate to the "Storage" tab in the Firefox Dev Tools</li>
+            <li>Under the "Cookies" heading, select <span class="text-monospace">https://fantasy.espn.com</span></li>
+            <li>Copy the value for <span class="text-monospace">espn_s2</span> and paste it in the field with the corresponding label on this page.</li>
+            <li>Copy the value for <span class="text-monospace">SWID</span> and paste it in the field with the corresponding label on this page.</li>
+          </ol>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav"
+         class="mt-2"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button"
+            class="btn btn-outline-primary"
+            (click)="modal.close()">OK</button>
+  </div>
+</ng-template>
+
 <div class="container h-100">
-  <div class="row logo-row justify-content-center align-items-center">
+  <div class="row header-row justify-content-center align-items-center">
     <div class="col col-md-10 col-lg-8">
-      <img class="img-fluid" src="../assets/logo.svg" />
+      <img class="img-fluid"
+           alt="Fantasy Football Challenges Logo"
+           src="../assets/logo.svg" />
     </div>
   </div>
+
   <div class="row main-row justify-content-center align-items-center">
-    <div class="col col-md-10 col-lg-8 card ps-0 pe-0"
+    <div class="col col-lg-8 card pl-0 pr-0"
          *ngIf="!showChallenge">
       <div class="card-header">
         Select A Challenge
       </div>
       <div class="card-body">
-        <div class="form-group">
-          <label for="yearInput"
-                 class="col-sm col-form-label">ESPN League ID <small>(must be public)</small></label>
-          <div class="col-sm">
+        <div class="form-group row">
+          <label for="leagueInput"
+                 class="col-6 col-sm-5 col-md-4 col-form-label">ESPN League ID</label>
+          <div class="col">
             <input class="form-control"
+                   id="leagueInput"
                    [(ngModel)]="espnLeagueId" />
           </div>
         </div>
-
-        <div class="form-group">
-          <label for="yearInput"
-                 class="col-sm col-form-label">Year</label>
-          <div class="col-sm">
-            <select class="form-select"
+        <div class="form-group row">
+          <label for="espnS2Input"
+                 class="col-6 col-sm-5 col-md-4 col-form-label">ESPN <span class="text-monospace">espn_s2</span> cookie</label>
+          <div class="col input-group">
+            <input class="form-control"
+                   id="espnS2Input"
+                   [(ngModel)]="espnS2" />
+            <div class="input-group-append">
+              <button (click)="openCookieInfoModal(content)"
+                      aria-label="ESPN Cookie Extraction Information"
+                      class="btn btn-sm btn-outline-primary"><i class="fas fa-info-circle"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="espnSwidInput"
+                 class="col-6 col-sm-5 col-md-4 col-form-label">ESPN <span class="text-monospace">SWID</span> cookie</label>
+          <div class="col input-group">
+            <input class="form-control"
+                   id="espnSwidInput"
+                   [(ngModel)]="swid" />
+            <div class="input-group-append">
+              <button (click)="openCookieInfoModal(content)"
+                      aria-label="ESPN Cookie Extraction Information"
+                      class="btn btn-sm btn-outline-primary"><i class="fas fa-info-circle"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-6 col-sm-5 col-md-4">
+            <label for="yearInput"
+                   class="col-form-label">Year</label>
+          </div>
+          <div class="col">
+            <select class="form-control"
+                    id="yearInput"
                     [(ngModel)]="year">
               <option *ngFor="let year of years">{{year}}</option>
             </select>
           </div>
         </div>
-
-        <div class="form-group">
-          <label for="weekInput"
-                 class="col-sm col-form-label">Week</label>
-          <div class="col-sm">
-            <select class="form-select"
+        <div class="form-group row">
+          <div class="col-6 col-sm-5 col-md-4">
+            <label for="weekInput"
+                   class="col-form-label">Week</label>
+          </div>
+          <div class="col">
+            <select class="form-control"
                     id="weekInput"
                     [(ngModel)]="week">
               <option *ngFor="let week of weeks">{{week}}</option>
             </select>
           </div>
         </div>
-
-        <div class="form-group">
-          <label for="challengeInput"
-                 class="col-sm col-form-label">Challenge</label>
-          <div class="col-sm">
-            <select class="form-select"
+        <div class="form-group row">
+          <div class="col-6 col-sm-5 col-md-4">
+            <label for="challengeInput"
+                   class="col-form-label">Challenge</label>
+          </div>
+          <div class="col">
+            <select class="form-control"
                     id="challengeInput"
                     [(ngModel)]="challenge">
-              <option *ngFor="let challenge of challenges"
-                      [value]="challenge.key">{{challenge.name}}</option>
+              <optgroup label="Team Point Challenges">
+                <option *ngFor="let chlg of challenges[0].children"
+                        [value]="chlg?.key">{{chlg?.name}}</option>
+              </optgroup>
+              <optgroup label="Team Margin Challenges">
+                <option *ngFor="let chlg of challenges[1].children"
+                        [value]="chlg?.key">{{chlg?.name}}</option>
+              </optgroup>
+              <optgroup label="Player Point Challenges">
+                <option *ngFor="let chlg of challenges[2].children"
+                        [value]="chlg?.key">{{chlg?.name}}</option>
+              </optgroup>
+              <optgroup label="Player Stat Challenges">
+                <option *ngFor="let chlg of challenges[3].children"
+                        [value]="chlg?.key">{{chlg?.name}}</option>
+              </optgroup>
+              <optgroup label="Miscellaneous Challenges">
+                <option *ngFor="let chlg of challenges[4].children"
+                        [value]="chlg?.key">{{chlg?.name}}</option>
+              </optgroup>
             </select>
           </div>
         </div>
-
-
       </div>
       <div class="card-footer">
-        <button type="button"
-                [disabled]="!canSubmit()"
-                class="btn btn-primary"
-                (click)="submit()">Submit</button>
+        <div class="row w-100 justify-content-between">
+          <button type="button"
+                  [disabled]="!canSubmit()"
+                  class="btn btn-primary"
+                  (click)="submit()">Submit</button>
+          <div>
+            <div class="row">
+              <label for="themePicker"
+                     class="col col-form-label">Theme</label>
+              <select class="form-control col"
+                      aria-label="Choose Color Theme"
+                      id="themePicker"
+                      [(ngModel)]="theme"
+                      (ngModelChange)="updateTheme($event)">
+                <option value='dark'>Dark</option>
+                <option value='light'>Light</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="card ps-0 pe-0"
-         style="width: 75%;"
+    <div class="col col-lg-8 card pl-0 pr-0"
          *ngIf="showChallenge">
       <app-challenge [challenge]="challenge"
                      [year]="year"
                      [week]="week"
+                     [privateLeague]="privateLeague"
                      [leagueId]="espnLeagueId"
                      (exit)="resetChallenge()"></app-challenge>
     </div>
+  </div>
 
+  <div class="row footer-row justify-content-center align-items-center">
+    <div class="col">
+      Cookies are only ever stored in your local browser.
+    </div>
+    <div class="col">
+      The source code for this project can be found <a href="https://github.com/joeltjames/fantasy-football-challenges">on Github</a>.
+    </div>
+    <div class="col">
+      If you have any issues with this tool, please log an issue <a href="https://github.com/joeltjames/fantasy-football-challenges/issues/new/choose">on Githib</a>, or reach out to me <a href="mailto:joeltjames@gmail.com">via email</a>.
+    </div>
   </div>
 </div>

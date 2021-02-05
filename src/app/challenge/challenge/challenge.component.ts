@@ -1,7 +1,12 @@
 import {animate, style, transition, trigger} from '@angular/animations';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Client, Team} from 'espn-fantasy-football-api/web-dev';
-import {challengeList, Challenges} from 'src/app/challenges';
+import {NgEspnFantasyFootballService, Team} from 'NgEspnFantasyFootball';
+import {
+  challengeMap,
+  Challenge,
+  ChallengeScore,
+  SortDirection,
+} from 'src/app/challenge/challenge/challenges';
 
 @Component({
   selector: 'app-challenge',
@@ -29,10 +34,13 @@ import {challengeList, Challenges} from 'src/app/challenges';
   ],
 })
 export class ChallengeComponent implements OnInit {
-  public challenges = Challenges;
+  public challenges = Challenge;
 
   @Input()
-  public challenge!: string | null;
+  public challenge!: Challenge | undefined;
+
+  @Input()
+  public privateLeague!: boolean;
 
   @Input()
   public year!: string | null;
@@ -47,24 +55,46 @@ export class ChallengeComponent implements OnInit {
 
   @Output() exit = new EventEmitter<boolean>();
 
-  teams: Team[] | null = null;
+  public scores: ChallengeScore[] = [];
 
-  constructor() {}
+  constructor(private espnSvc: NgEspnFantasyFootballService) {}
 
   ngOnInit(): void {
     const leagueId = parseInt(this.leagueId || '', 10);
     const year = parseInt(this.year || '', 10);
     const week = parseInt(this.week || '', 10);
 
-    new Client({leagueId})
-      .getTeamsAtWeek({
-        seasonId: year,
-        scoringPeriodId: week,
-      })
-      .then(teams => (this.teams = teams));
+    console.log(leagueId);
+
+    this.espnSvc.getTeamsAtWeek(leagueId, year, week).subscribe(teams => {
+      this.loadChallengeData(teams);
+    });
   }
 
   public get title(): string | undefined {
-    return challengeList.find(challenge => challenge.key === this.challenge)?.name;
+    return this.challenge ? challengeMap[this.challenge]?.name : '';
+  }
+
+  public loadChallengeData(teams: Team[]): void {
+    if (this.challenge) {
+      const challengeDetail = challengeMap[this.challenge];
+      const leagueId = parseInt(this.leagueId || '', 10);
+      const year = parseInt(this.year || '', 10);
+      const week = parseInt(this.week || '', 10);
+
+      this.espnSvc
+        .getBoxscoresAtWeek(leagueId, year, week, week)
+        .subscribe(boxscores => {
+          this.scores = challengeDetail.processor(teams, boxscores);
+          this.scores.sort((a, b) => {
+            if (challengeDetail.sortDirection === SortDirection.ASCENDING) {
+              return a.score - b.score;
+            } else {
+              return b.score - a.score;
+            }
+          });
+          this.loading = false;
+        });
+    }
   }
 }

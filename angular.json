@@ -107,13 +107,53 @@
           "options": {
             "tsConfig": [
               "tsconfig.app.json",
-              "tsconfig.spec.json",
+              "tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
           }
+        }
+      }
+    },
+    "NgEspnFantasyFootball": {
+      "projectType": "library",
+      "root": "projects/ng-espn-fantasy-football",
+      "sourceRoot": "projects/ng-espn-fantasy-football/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-espn-fantasy-football/tsconfig.lib.json",
+            "project": "projects/ng-espn-fantasy-football/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-espn-fantasy-football/tsconfig.lib.prod.json"
+            }
+          }
         },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-espn-fantasy-football/src/test.ts",
+            "tsConfig": "projects/ng-espn-fantasy-football/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-espn-fantasy-football/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-espn-fantasy-football/tsconfig.lib.json",
+              "projects/ng-espn-fantasy-football/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
       }
     }
   },
