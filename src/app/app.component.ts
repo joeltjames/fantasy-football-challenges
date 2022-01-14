@@ -2,10 +2,14 @@ import {Component} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {groupBy} from 'lodash';
 import {filter} from 'rxjs/operators';
-import {challengeMap, Challenge, ChallengeType} from './challenge/challenge/challenges';
+import {
+  challengeMap,
+  Challenge,
+  ChallengeType,
+} from './challenge/challenge/challenges';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { NgEspnFantasyFootballService } from 'NgEspnFantasyFootball';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgEspnFantasyFootballService} from 'NgEspnFantasyFootball';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,9 +18,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class AppComponent {
   // tslint:disable-next-line:variable-name
   private _challenge: string | undefined = undefined;
-  year: string | null = localStorage.getItem('year') || '';
-  week: string | null = localStorage.getItem('week') || '';
-  espnLeagueId: string | null = localStorage.getItem('leagueId') || '';
+  year: string | null = localStorage.getItem('year') || '2019';
+  week: string | null = localStorage.getItem('week') || '1';
+  espnLeagueId: string | null = localStorage.getItem('leagueId') || '48153503';
   privateLeague = localStorage.getItem('isPrivate') === 'true';
   espnS2 = this.getCookie('espn_s2') || '';
   swid = this.getCookie('SWID') || '';
@@ -31,8 +35,7 @@ export class AppComponent {
   constructor(
     private espnSvc: NgEspnFantasyFootballService,
     private modalService: NgbModal
-  ) {
-  }
+  ) {}
 
   public openCookieInfoModal(content: any): void {
     this.modalService.open(content);

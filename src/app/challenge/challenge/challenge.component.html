@@ -1,41 +1,58 @@
 <div class="card-header"
      style="position: relative; height: 2.5em;">
-  <span [@outAnimation]
-        *ngIf="loading"
-        style="position: absolute;">Loading...</span>
-  <span [@inAnimation]
-        *ngIf="!loading"
-        style="position: absolute;">{{title}}</span>
-</div>
-<div class="card-body h-100 d-flex justify-content-center align-items-cente">
-  <i class="fade-in-and-out loading-indicator fas fa-football-ball"
-     *ngIf="loading"></i>
-  <div>
-    <div *ngIf="!loading"
-         class="container-fluid">
-      <table class="table table-sm table-borderless align-middle">
-        <tbody>
-          <tr *ngFor="let score of scores.slice(0,5); let i = index">
-            <td><i class="fas fa-trophy mx-auto"
-                 [hidden]="i > 2"
-                 [ngClass]="{'gold': i === 0, 'silver': i === 1, 'bronze': i === 2}"
-                 [style.font-size]="(2 - .25 * i)+'em'"></i></td>
-            <td><img [src]="score.logoURL"
-                   style="height: 2.5em" /></td>
-            <td>{{score.name}}</td>
-            <td>{{score.scoreDisplay}}</td>
-            <td>
-              <div class="small">{{score.scoreDetail}}</div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <ng-container *ngIf="!errorMessage">
+    <span [@outAnimation]
+          *ngIf="loading"
+          style="position: absolute;">Loading...</span>
+    <div *ngIf="!loading">
+      <div class="row justify-content-around">
+        <div class="col-8">{{title}}</div>
+        <div class="col-4">
+          <div class="float-right">{{year}} WK {{week}}</div>
+        </div>
+      </div>
     </div>
-  </div>
+  </ng-container>
+  <ng-container *ngIf="errorMessage">Error!</ng-container>
+</div>
+<div class="card-body h-100 d-flex justify-content-center align-items-center">
+  <ng-container *ngIf="!errorMessage">
+    <i class="fade-in-and-out loading-indicator fas fa-football-ball"
+       *ngIf="loading"></i>
+    <div>
+      <div *ngIf="!loading"
+           class="container-fluid">
+        <table class="table table-sm table-borderless align-middle">
+          <tbody>
+            <tr *ngFor="let score of scores.slice(0,5); let i = index">
+              <td><i class="fas fa-trophy mx-auto"
+                   [hidden]="i > 2"
+                   [ngClass]="{'gold': i === 0, 'silver': i === 1, 'bronze': i === 2}"
+                   [style.font-size]="(2 - .25 * i)+'em'"></i></td>
+              <td><img [src]="score.logoURL"
+                     style="height: 2.5em" /></td>
+              <td>{{score.name}}</td>
+              <td>{{score.scoreDisplay}}</td>
+              <td>
+                <div class="small">{{score.scoreDetail}}</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="errorMessage">
+    <div>
+      Error loading data!
+      <span>{{errorMessage}}</span>
+    </div>
+  </ng-container>
 </div>
 
 <div class="card-footer">
   <button type="button"
           class="btn btn-primary"
+          [ngClass]="{'btn-danger': errorMessage}"
           (click)="exit.emit()">Exit</button>
 </div>

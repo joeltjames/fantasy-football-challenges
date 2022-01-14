@@ -13,18 +13,6 @@ import {
   templateUrl: './challenge.component.html',
   styleUrls: ['./challenge.component.scss'],
   animations: [
-    trigger('inAnimation', [
-      transition(':enter', [
-        style({opacity: 0, offset: 1}),
-        animate('1s ease-out', style({opacity: 1, offset: 0})),
-      ]),
-    ]),
-    trigger('longInAnimation', [
-      transition(':enter', [
-        style({opacity: 0, offset: 1}),
-        animate('2s ease-out', style({opacity: 1, offset: 0})),
-      ]),
-    ]),
     trigger('outAnimation', [
       transition(':leave', [
         style({opacity: 1, offset: 0}),
@@ -57,6 +45,8 @@ export class ChallengeComponent implements OnInit {
 
   public scores: ChallengeScore[] = [];
 
+  errorMessage: string | null = null;
+
   constructor(private espnSvc: NgEspnFantasyFootballService) {}
 
   ngOnInit(): void {
@@ -66,9 +56,22 @@ export class ChallengeComponent implements OnInit {
 
     console.log(leagueId);
 
-    this.espnSvc.getTeamsAtWeek(leagueId, year, week).subscribe(teams => {
-      this.loadChallengeData(teams);
-    });
+    this.espnSvc.getTeamsAtWeek(leagueId, year, week).subscribe(
+      teams => {
+        this.loadChallengeData(teams);
+      },
+      err => this.handleError(err)
+    );
+  }
+
+  private handleError(err: any): void {
+    console.log('ERRRRRR!!');
+    if (err.status === 401) {
+      this.errorMessage =
+        'Unathorized access to ESPN. Please check cookies and try again.';
+    } else {
+      this.errorMessage = `Unexpected error: ${err.message}`;
+    }
   }
 
   public get title(): string | undefined {
@@ -82,9 +85,8 @@ export class ChallengeComponent implements OnInit {
       const year = parseInt(this.year || '', 10);
       const week = parseInt(this.week || '', 10);
 
-      this.espnSvc
-        .getBoxscoresAtWeek(leagueId, year, week, week)
-        .subscribe(boxscores => {
+      this.espnSvc.getBoxscoresAtWeek(leagueId, year, week, week).subscribe(
+        boxscores => {
           this.scores = challengeDetail.processor(teams, boxscores);
           this.scores.sort((a, b) => {
             if (challengeDetail.sortDirection === SortDirection.ASCENDING) {
@@ -94,7 +96,9 @@ export class ChallengeComponent implements OnInit {
             }
           });
           this.loading = false;
-        });
+        },
+        err => this.handleError(err)
+      );
     }
   }
 }
