@@ -1,19 +1,38 @@
 # FantasyFootballChallenges
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
+A Typescript application written to allow fantasy football managers and players determine the winner of various challenges.
 
-## Development server
+Visit https://joeltjames.github.io/fantasy-football-challenges/ to use the app.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Challenges
+- Most Points By Winning Team (Starters)
+- Most Points By Losing Team (Starters)
+- Least Points By Winning Team (Starters)
+- Least Points By Losing Team (Starters)
+- Most Points By Entire Team
+- Least Points By Entire Team
+- Most Points By Bench
+- Least Points By Bench
+- Win By Smallest Margin
+- Lose By Smallest Margin
+- Win By Largest Margin
+- Lose By Largest Margin
+- Most Points By Starting D/ST
+- Most Points By Starting QB
+- Most Points By Starting QB Duo
+- Most Points By Starting RB
+- Most Points By Starting WR
+- Most Points By Starting TE
+- Most Points By Starting Flex
+- Most Points By Starting K
+- FLEX With Most Points Without a Touchdown
+- Most Passing Yards by Starting QB
+- Most Receiptions by Starting WR
+- Most Receiptions by Starting RB
+- Most Rushing Yards by Starting RB
+- Most Turnovers by Starting D/ST
+- Most Sacks by Starting D/ST
+- RB Closest to 100 Rushing Yards
+- Team With Most Offensive TDs
+- Team With Most Players on Same NFL Team
+- Player Who Outperformed Projections the Most
