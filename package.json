@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "publish": "ng build --prod --base-href \"https://joeltjames.github.io/fantasy-football-challenges\""
   },
   "private": true,
   "dependencies": {

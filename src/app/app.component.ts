@@ -26,7 +26,7 @@ export class AppComponent {
   swid = this.getCookie('SWID') || '';
   active = 'chrome';
 
-  years = [2020, 2019];
+  years = [2022, 2021, 2020, 2019];
   weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
   theme = localStorage.getItem('theme') || 'dark';
 
